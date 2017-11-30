@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TodoService } from './todo.service';
 import { Todo } from './todo';
 import {NgForm} from '@angular/forms';
+import {Vehicle} from "./vehicle";
 
 @Component({
   selector: 'todo-list',
@@ -20,16 +21,18 @@ export class TodoListComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getTodos();
+    console.log()
   }
 
   getTodos(): void {
     this.todoService.getTodos()
-      .then(todos => this.todos = todos );  	
+      .then(todos => this.todos = todos );
   }
 
   createTodo(todoForm: NgForm): void {
+	  console.log("In createTodo")
     this.todoService.createTodo(this.newTodo)
-      .then(createTodo => {        
+      .then(createTodo => {
         todoForm.reset();
 	      this.newTodo = new Todo();
 	      this.todos.unshift(createTodo)
@@ -70,6 +73,16 @@ export class TodoListComponent implements OnInit {
   clearEditing(): void {
     this.editingTodo = new Todo();
     this.editing = false;
+  }
+
+  onSelect(vehicleId) {
+    this.newTodo.vehicleType = null;
+    for (var i = 0; i < this.newTodo.vehicleTypes.length; i++)
+    {
+      if (this.newTodo.vehicleTypes[i].id == vehicleId) {
+        this.newTodo.vehicleType = this.newTodo.vehicleTypes[i].id.toLocaleString();
+      }
+    }
   }
 
 }
