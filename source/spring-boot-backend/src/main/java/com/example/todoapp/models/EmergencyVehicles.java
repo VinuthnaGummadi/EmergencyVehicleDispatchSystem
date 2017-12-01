@@ -56,4 +56,22 @@ public class EmergencyVehicles {
                 id, vehicle_type, vehicle_name);
     }
 	
+	public boolean equals(Object o){
+	    if(o == null)
+	    	return false;
+	    if(!(o instanceof EmergencyVehicles)) 
+	    	return false;
+
+	    EmergencyVehicles other = (EmergencyVehicles) o;
+	    if(!this.vehicle_type.equalsIgnoreCase(other.vehicle_type))      return false;
+	    if(!this.vehicle_name.equalsIgnoreCase(other.vehicle_name))      return false;
+
+	    return true;
+	  }
+	
+	public int hashCode(){
+	    return (int) 31 *
+	    		vehicle_type.hashCode()*vehicle_name.hashCode();
+	  }
+	
 }

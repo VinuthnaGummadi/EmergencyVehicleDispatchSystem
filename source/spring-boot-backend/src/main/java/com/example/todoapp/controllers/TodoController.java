@@ -6,6 +6,7 @@ import com.example.todoapp.models.Distance;
 import com.example.todoapp.models.EmergencyVehicles;
 import com.example.todoapp.models.HeapNode;
 import com.example.todoapp.models.Todo;
+import com.example.todoapp.models.VehicleIDs;
 import com.example.todoapp.models.ZipCode;
 import com.example.todoapp.repositories.DistanceRepository;
 import com.example.todoapp.repositories.EmergencyVehiclesRepository;
@@ -41,7 +42,16 @@ public class TodoController {
     @GetMapping("/todos")
     public List<Todo> getAllTodos() {
         Sort sortByCreatedAtDesc = new Sort(Sort.Direction.DESC, "createdAt");
-        return todoRepository.findAll(sortByCreatedAtDesc);
+       List<Todo> todos = todoRepository.findAll(sortByCreatedAtDesc);
+       for(Todo todo:todos){
+    	   if(todo.getVehicleType().equalsIgnoreCase("1"))
+    		   todo.setVehicleType("Ambulance");
+    	   else if(todo.getVehicleType().equalsIgnoreCase("2"))
+    		   todo.setVehicleType("Fire Truck");
+    	   else if(todo.getVehicleType().equalsIgnoreCase("3"))
+    		   todo.setVehicleType("Police Car");
+       }
+       return todos;
     }
 
     @PostMapping("/todos")
@@ -68,9 +78,10 @@ public class TodoController {
     	  
     	  for(ZipCode zip:destinationZipCodes){
     		  if(Integer.parseInt(todo.getZipCode())==Integer.parseInt(zip.getZip())
-    				  && Integer.parseInt(zip.getAvailableCount())!=0){
+    				  && zip.getVehicle_ids()!=null && !zip.getVehicle_ids().isEmpty()){
     			  todo.setDistance(Double.toString(0.0));
     			  vehicleInsameZip = true;
+    			  todo.setVehicleId(zip.getVehicle_ids().get(0).getVehicle_id());
     			  heapList = null;
     			  break;
     		  }else{
@@ -109,7 +120,13 @@ public class TodoController {
 			    	  
 			    	  if(distanceList!=null){
 			    		  for(Distance distanceObj:distanceList){
-				    		  String destinationZipCode = distanceObj.getZip_code2();
+			    			  String destinationZipCode = null;
+			    			  
+			    			  if(Integer.parseInt(distanceObj.getZip_code2())!=Integer.parseInt(sourceZipCode))
+			    				  destinationZipCode = distanceObj.getZip_code2();
+			    			  else
+			    				  destinationZipCode = distanceObj.getZip_code1();
+			    			  
 				    		  double distance = sourceMinDistance + Double.parseDouble(distanceObj.getDistance());
 				    		  String path = distanceObj.getZip_code1();
 				    		  
@@ -123,8 +140,35 @@ public class TodoController {
 				    			  node.setPath(path);
 				    			  heapList.set(index, node);
 				    			  minHeap = new MinHeap(heapList);
-				    			  if(minDistance>distance)
+				    			  
+				    			  if(minDistance>distance){
 				    				  minDistance = distance;
+				    				  ZipCode zipCode = new ZipCode();
+				    				  zipCode.setZip(destinationZipCode);
+				    				  int zipIndex = destinationZipCodes.indexOf(zipCode);
+				    				  List<VehicleIDs> vehicleIds = destinationZipCodes.get(zipIndex).getVehicle_ids();
+				    				  todo.setVehicleId(vehicleIds.get(0).getVehicle_id());
+				    				  
+				    				  ZipCode zipCode1 = new ZipCode();
+				    				  zipCode1.setZip(sourceZipCode);
+				    				  VehicleIDs vehicle = new VehicleIDs();
+				    				  vehicle.setVehicle_id(vehicleIds.get(0).getVehicle_id());
+				    				  vehicle.setAt_source("N");
+				    				  vehicle.setBelongs_to(vehicleIds.get(0).getAt_source());
+				    				  List<VehicleIDs> sourceVehicleIds = new ArrayList<VehicleIDs>();
+				    				  sourceVehicleIds.add(vehicle);
+				    				  
+				    				  
+				    				  int sourcezipIndex = destinationZipCodes.indexOf(zipCode1);
+				    				  destinationZipCodes.get(sourcezipIndex).setVehicle_ids(sourceVehicleIds);
+				    				  
+				    				  vehicleIds.remove(0);
+				    				  destinationZipCodes.get(zipIndex).setVehicle_ids(vehicleIds);
+				    				  
+				    				  vehicles.setZip_code(destinationZipCodes);
+				    				  
+				    				  vehiclesRepository.save(vehicles);
+				    			  }
 				    		  }
 				    		  
 			    		  }

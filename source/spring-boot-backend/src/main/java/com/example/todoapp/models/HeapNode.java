@@ -7,6 +7,8 @@ public class HeapNode {
 	private Double distance;
 	
 	private String path;
+	
+	private String vehicleID;
 
 	public String getZipCode() {
 		return zipCode;
@@ -32,6 +34,14 @@ public class HeapNode {
 		this.path = path;
 	}
 	
+	public String getVehicleID() {
+		return vehicleID;
+	}
+
+	public void setVehicleID(String vehicleID) {
+		this.vehicleID = vehicleID;
+	}
+
 	public boolean equals(Object o){
 	    if(o == null)
 	    	return false;

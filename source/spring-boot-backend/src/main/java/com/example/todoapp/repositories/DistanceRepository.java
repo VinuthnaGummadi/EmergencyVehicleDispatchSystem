@@ -9,6 +9,6 @@ import com.example.todoapp.models.Distance;
 
 public interface DistanceRepository extends MongoRepository<Distance,String> {
 
-	@Query("{'zip_code1' : ?0}")
+	@Query("{'$or':[ {'zip_code1':?0}, {'zip_code2':?0} ]}")
 	public List<Distance> searchByName(String zip_code1);
 }

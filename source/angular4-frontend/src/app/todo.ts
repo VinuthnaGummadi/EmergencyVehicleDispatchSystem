@@ -3,7 +3,7 @@ export class Todo {
   public id: string;
   public vehicleTypes: Array<Vehicle> = [new Vehicle(-1,'--Select Vehicle--'),
                     new Vehicle(1,'Ambulance'),new Vehicle(2, 'Fire Truck'),new Vehicle(3, 'Police Car')];
-  public vehicleType: string;
+  private _vehicleType: string;
   public completed: boolean;
   public createdAt: Date;
   public zipCode: string;
