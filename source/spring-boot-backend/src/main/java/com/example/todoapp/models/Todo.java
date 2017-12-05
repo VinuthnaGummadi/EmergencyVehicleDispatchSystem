@@ -33,6 +33,10 @@ public class Todo {
     
     @Size(max=100)
     private String requestId="";
+    
+    private String source = "";
+    
+    private String path = "";
 
     private Boolean completed = false;
 
@@ -112,6 +116,24 @@ public class Todo {
 
 	public void setRequestId(String requestId) {
 		this.requestId = requestId;
+	}
+	
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+	
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import { FormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list.component';
 import { TodoService } from './todo.service';
+import {TooltipModule} from "ngx-tooltip";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { TodoService } from './todo.service';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    TooltipModule
   ],
   providers: [TodoService],
   bootstrap: [AppComponent]

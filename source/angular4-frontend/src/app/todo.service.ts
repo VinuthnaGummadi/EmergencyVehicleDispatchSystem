@@ -17,7 +17,7 @@ export class TodoService {
   }
 
   createTodo(todoData: Todo): Promise<Todo> {
-    console.log(todoData.id+"--"+todoData.zipCode)
+    console.log(todoData.id+"--"+todoData.zipCode);
     return this.http.post(this.baseUrl + '/api/todos/', todoData)
       .toPromise().then(response => response.json() as Todo)
       .catch(this.handleError);

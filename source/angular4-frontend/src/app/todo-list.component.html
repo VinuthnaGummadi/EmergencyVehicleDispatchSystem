@@ -33,13 +33,16 @@
           <span style="padding-right: 3%">
             	<h4>Distance</h4>
             </span>
+          <span style="padding-right: 3%">
+            	<h4>Source</h4>
+            </span>
         </div>
         <div class="todo-row" *ngIf="!editing || editingTodo.id != todo.id">
 
             <span style="padding-left: 5% ;padding-right: 5%">
             	{{todo.requestId}}
             </span>
-          <span style="padding-left: 6% ;padding-right: 5%">
+          <span style="padding-left: 6% ;padding-right: 8%">
             	{{todo.vehicleType}}
             </span>
           <span style="padding-left: 3% ;padding-right: 5%">
@@ -48,13 +51,11 @@
           <span style="padding-left: 5% ;padding-right: 10%">
             	{{todo.vehicleId}}
             </span>
-          <span style="padding-left: 2%">
+          <span style=" padding-right: 5%">
             	{{todo.distance}}
             </span>
-            <span class="todo-actions">
-                <a (click)="deleteTodo(todo.id)">
-                	<i class="material-icons delete">clear</i>
-                </a>
+          <span style="padding-left: 2%;color: #CD906C" tooltip="{{todo.path}}">
+            <u>{{todo.source}}</u>
             </span>
         </div>
       </li>

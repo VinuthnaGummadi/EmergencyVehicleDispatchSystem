@@ -9,6 +9,8 @@ public class HeapNode {
 	private String path;
 	
 	private String vehicleID;
+	
+	private boolean vehicleAvailable;
 
 	public String getZipCode() {
 		return zipCode;
@@ -40,6 +42,15 @@ public class HeapNode {
 
 	public void setVehicleID(String vehicleID) {
 		this.vehicleID = vehicleID;
+	}
+	
+
+	public boolean isVehicleAvailable() {
+		return vehicleAvailable;
+	}
+
+	public void setVehicleAvailable(boolean vehicleAvailable) {
+		this.vehicleAvailable = vehicleAvailable;
 	}
 
 	public boolean equals(Object o){

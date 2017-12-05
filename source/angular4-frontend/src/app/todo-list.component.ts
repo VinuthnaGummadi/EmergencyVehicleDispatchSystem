@@ -30,13 +30,20 @@ export class TodoListComponent implements OnInit {
   }
 
   createTodo(todoForm: NgForm): void {
-	  console.log("In createTodo")
+	  console.log("In createTodo");
     this.todoService.createTodo(this.newTodo)
       .then(createTodo => {
+        if(createTodo.vehicleType=="1")
+          createTodo.vehicleType='Ambulance'
+        else if(createTodo.vehicleType=="2")
+          createTodo.vehicleType='Fire Truck'
+        else if(createTodo.vehicleType=="3")
+          createTodo.vehicleType='Police Car'
         todoForm.reset();
 	      this.newTodo = new Todo();
 	      this.todos.unshift(createTodo)
       });
+
   }
 
   deleteTodo(id: string): void {
