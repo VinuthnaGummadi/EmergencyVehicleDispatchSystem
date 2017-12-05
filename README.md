@@ -27,6 +27,8 @@ cd spring-boot-backend
 mvn install
 mvn spring-boot:run
 
+The backend server will start at http://localhost:8080.
+
 OR
 
 1. Run console application on spring-boot to get the shortest path and distance.
