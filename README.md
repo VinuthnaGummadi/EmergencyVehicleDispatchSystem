@@ -39,7 +39,7 @@ mvn spring-boot:run
 
 java com.example.todoapp.controllers.TodoController
 
-Scren shots of application are available in below location:
+Screen shots of application are available in below location:
 
 https://github.com/VinuthnaGummadi/EmergencyVehicleDispatchSystem/wiki/Emergency-Vehicle-Dispatch-System---Design-and-Analysis-of-Algorithms-Project-Report
 
