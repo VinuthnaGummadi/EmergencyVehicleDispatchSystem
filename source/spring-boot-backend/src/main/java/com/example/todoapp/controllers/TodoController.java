@@ -266,7 +266,17 @@ public class TodoController {
     	  }
       }
        
-       System.out.println("Counter:"+counter);
+       System.out.println("Shortest Path:"+todo.getPath());
+       System.out.println("Distance that has to be travelled:"+todo.getDistance());
+       System.out.println("Iteration count for the algorithm excluding heap:"+counter);
         return todoRepository.save(todo);
     }
+    
+    public static void main(String[] args) {
+		TodoController controller = new TodoController();
+		Todo todo = new Todo();
+		todo.setZipCode("64159");
+		todo.setVehicleType("1");
+		controller.createTodo(todo);
+	}
 }
