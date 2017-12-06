@@ -17,15 +17,21 @@ To Run the project:
 1. To run Angular JS front end application:
 
 cd angular4-frontend
+
 npm install
+
 npm start
+
 Frontend server will run on http://localhost:4200
 
 2. To run Spring boot backend webservices:
 
 cd spring-boot-backend
+
 mvn install
+
 mvn spring-boot:run
+
 
 The backend server will start at http://localhost:8080.
 
@@ -34,7 +40,9 @@ OR
 1. Run console application on spring-boot to get the shortest path and distance.
 
 cd spring-boot-backend
+
 mvn install
+
 mvn spring-boot:run
 
 java com.example.todoapp.controllers.TodoController
