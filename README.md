@@ -49,5 +49,5 @@ java com.example.todoapp.controllers.TodoController
 
 Screen shots of application are available in below location:
 
-https://github.com/VinuthnaGummadi/EmergencyVehicleDispatchSystem/wiki/Emergency-Vehicle-Dispatch-System---Design-and-Analysis-of-Algorithms-Project-Report
+https://github.com/VinuthnaGummadi/EmergencyVehicleDispatchSystem/wiki/Emergency-Vehicle-Dispatch-System----Design-and-Analysis-of-Algorithms-Project-Report
 
