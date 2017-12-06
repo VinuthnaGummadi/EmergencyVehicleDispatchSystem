@@ -69,6 +69,7 @@ public class TodoController {
     public Todo createTodo(@Valid @RequestBody Todo todo) {
         todo.setCompleted(false);
         
+        counter = 0;
         //Set unique requestId based on old request
         incrementor = incrementor+1;
         todo.setRequestId(Integer.toString(incrementor));
@@ -144,6 +145,7 @@ public class TodoController {
     		  
     		  List<String> finisedNodes = new ArrayList<String>();
     		  String path = "";
+    		  String shortestPath ="";
     		  
     		  // Iterating the heap list, calculate the minimum distance and the minimum path.
     		  for(int i =1; i<heapSize;i++){
@@ -158,7 +160,8 @@ public class TodoController {
 			    	  
 			    	  Double sourceMinDistance = minHeapNode.getDistance();
 			    	  
-			    	  String path1 = path+"--";
+			    	  path = minHeapNode.getPath();
+			    	  String path1 = "";
 			    	  
 			    	  // Get the distances from source to other destination zips from the table.
 			    	  List<Distance> distanceList = distanceRepository.searchByName(sourceZipCode);
@@ -175,11 +178,11 @@ public class TodoController {
 				    			  // Get the destination zip Code, as it is bi directional, source can be at zipcode1 or zipcode2
 				    			  if(Integer.parseInt(distanceObj.getZip_code2())!=Integer.parseInt(sourceZipCode)){
 				    				  destinationZipCode = distanceObj.getZip_code2();
-				    				  path1 = distanceObj.getZip_code2();
+				    				  path1 = path+"--"+distanceObj.getZip_code2();
 				    			  }
 				    			  else{
 				    				  destinationZipCode = distanceObj.getZip_code1();
-				    				  path1 = distanceObj.getZip_code1();
+				    				  path1 = path+"--"+distanceObj.getZip_code1();
 				    			  }
 				    			  
 				    			  // Increment the distance based on the previous edge distance.
@@ -199,20 +202,17 @@ public class TodoController {
 					    			  
 					    			  //Modify the heap node in the min heap and re-heapify
 					    			  node.setDistance(distance);
-					    			  node.setPath(path);
+					    			  node.setPath(path1);
 					    			  heapList.set(index, node);
 					    			  minHeap = new MinHeap(heapList);
 					    			  
-					    			  if(!sourceVehicleAvailable && pathMinDistance>distance){
-					    				  pathMinDistance = distance;
-					    				  path = path1;
-					    			  }
+					    			 
 					    			  // If the edge distance is minimum then get the vehicle Ids and remove the min heap node from heap
 					    			  if( sourceVehicleAvailable && minDistance>distance){
 					    				  minDistance = distance;
 					    				  minsourceZipCode = sourceZipCode;
 					    				  mindestinationZipCode = destinationZipCode;
-					    				  path = path1+"--"+path;
+					    				  shortestPath = path;
 					    				 
 					    			  }
 					    		  }
@@ -238,7 +238,7 @@ public class TodoController {
 			  
 			  // Add the vehicle details at the source zip code.
 			  ZipCode zipCode1 = new ZipCode();
-			  zipCode1.setZip(minsourceZipCode);
+			  zipCode1.setZip(todo.getZipCode());
 			  VehicleIDs vehicle = new VehicleIDs();
 			  vehicle.setVehicle_id(vehicleIds.get(0).getVehicle_id());
 			  vehicle.setAt_source("N");
@@ -262,7 +262,7 @@ public class TodoController {
     		  todo.setDistance(Double.toString(minDistance));
     	
 			// Set path
-    		  todo.setPath(path+"--"+todo.getZipCode());
+    		  todo.setPath(shortestPath+"--"+mindestinationZipCode);
     	  }
       }
        
