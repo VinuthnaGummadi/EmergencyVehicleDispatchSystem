@@ -231,7 +231,8 @@ public class TodoController {
 					    			  node.setDistance(distance);
 					    			  node.setPath(path1);
 					    			  heapList.set(index, node);
-					    			  minHeap = new MinHeap(heapList);
+					    			 
+					    			  minHeap.decreaseKey(index, node);
 					    			  
 					    			 
 					    			  // If the edge distance is minimum then get the vehicle Ids and remove the min heap node from heap
@@ -247,10 +248,7 @@ public class TodoController {
 			    			  }  
 			    		  }
 			    		  // remove the min heap node from heap
-			    		  HeapNode node = new HeapNode();
-			    		  node.setZipCode( sourceZipCode);
-			    		  heapList.remove(node);
-			    		  minHeap = new MinHeap(heapList);
+			    		  
 			    		  finisedNodes.add(sourceZipCode);
 			    		 
 			    	  }
