@@ -67,7 +67,34 @@ public class TodoController {
      */
     @PostMapping("/todos")
     public Todo createTodo(@Valid @RequestBody Todo todo) {
-        todo.setCompleted(false);
+       
+    	todo = findShortestPath(todo);
+       System.out.println("\nRequested zipCode:"+todo.getZipCode());
+       System.out.println("Requested vehicle:"+todo.getVehicleType());
+       System.out.println("Shortest Path:"+todo.getPath());
+       System.out.println("Distance that has to be travelled:"+todo.getDistance());
+       System.out.println("Iteration count for the algorithm excluding heap:"+counter);
+        return todoRepository.save(todo);
+    }
+    
+    
+    @PostMapping("/multi-todos")
+    public List<Todo> createMultiTodo(@Valid @RequestBody List<Todo> todos) {
+        
+       for(Todo todo:todos){
+    	   todo = findShortestPath(todo);
+           System.out.println("\nRequested zipCode:"+todo.getZipCode());
+           System.out.println("Requested vehicle:"+todo.getVehicleType());
+           System.out.println("Shortest Path:"+todo.getPath());
+           System.out.println("Distance that has to be travelled:"+todo.getDistance());
+           System.out.println("Iteration count for the algorithm excluding heap:"+counter);
+           todoRepository.save(todo);
+       }
+	return todos;
+    }
+    
+    public Todo findShortestPath(Todo todo){
+    	todo.setCompleted(false);
         
         counter = 0;
         //Set unique requestId based on old request
@@ -265,18 +292,8 @@ public class TodoController {
     		  todo.setPath(shortestPath+"--"+mindestinationZipCode);
     	  }
       }
-       
-       System.out.println("Shortest Path:"+todo.getPath());
-       System.out.println("Distance that has to be travelled:"+todo.getDistance());
-       System.out.println("Iteration count for the algorithm excluding heap:"+counter);
-        return todoRepository.save(todo);
+	return todo;
     }
     
-    public static void main(String[] args) {
-		TodoController controller = new TodoController();
-		Todo todo = new Todo();
-		todo.setZipCode("64159");
-		todo.setVehicleType("1");
-		controller.createTodo(todo);
-	}
+   
 }
